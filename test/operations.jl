@@ -38,7 +38,7 @@ ba2 = bitarray(inds, 4)
 
 msk = bmask(2,5)
 @test swapbits(7, msk) == 21
-@test breflect(7, Int(0b0110001)) == Int(0b1000110) == breflect(7, Int(0b0110001), [bmask(1, 7), bmask(2, 6), bmask(3,5)])
+@test breflect(Int(0b0110001); nbits=7) == Int(0b1000110) == breflect(Int(0b0110001), [bmask(1, 7), bmask(2, 6), bmask(3,5)]; nbits=7)
 
 @test bitarray(2, 4) == [false, true, false, false]
 @test packbits(BitArray([true, true, true])) == 7
@@ -50,7 +50,7 @@ msk = bmask(2,5)
     @test bint(5) == 5
     @test bint_r(3, nbits=4) == 12
     @test bfloat(3) == 0.75
-    @test bfloat_r(3, nbits=4) == 0.75/4
+    @test bfloat_r(3; nbits=4) == 0.75 / 4
     @test bint_r(0.75, nbits=3) == 6
     @test bint(0.75, nbits=3) == 3
 end
