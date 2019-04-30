@@ -1,4 +1,4 @@
-export bsizeof, bdistance, bit_length, onehot, log2i, hypercubic, log2dim1
+export bsizeof, bdistance, bit_length, onehot, log2i, hypercubic, log2dim1, indices_with
 # NOTE: all binary specified operations begin with b
 
 """
@@ -94,4 +94,15 @@ function int(n::Int)
     n <= 32 ?  Int32  :
     n <= 64 ?  Int64  :
     n <= 128 ? Int128 : BigInt
+end
+
+"""
+    indices_with(n::Int, locs::Vector{Int}, vals::Vector{Int}) -> Vector{Int}
+
+Return indices with specific positions `locs` with value `vals` in a hilbert space of `n` qubits.
+"""
+function indices_with(n::Int, locs::Vector{Int}, vals::Vector{Int})
+    mask = bmask(locs)
+    onemask = bmask(locs[vals.!=0])
+    return filter(x->ismatch(x, mask, onemask), basis(n))
 end
